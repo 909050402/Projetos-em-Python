@@ -1,0 +1,269 @@
+{
+  "name": "Chamados",
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "mateuanvilaca@gmail.com",
+        "subject": "Teste",
+        "emailType": "text",
+        "message": "=Novo chamado recebido do(a)  {{ $json['Nome Completo'] }}\ne-mail: {{ $json['E-mail'] }}\nTelefone: {{ $json.Telefone }}\nsetor: {{ $json.Setor }} \nSolicitação:{{ $json['Solicitação'] }}\nDescrição:  {{ $json['Descrição'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        272,
+        144
+      ],
+      "id": "830e7851-d415-45ce-b61d-78877bff451f",
+      "name": "Send a message",
+      "webhookId": "881b0695-c7dc-4d54-b81a-ffadca0f7737",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Chamados TI Formulário",
+        "formDescription": "Esse formulário servirá para para o usuário preencher informações de chamados de TI",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome Completo",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "E-mail",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Telefone",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Setor",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "RH"
+                  },
+                  {
+                    "option": "Financeiro"
+                  },
+                  {
+                    "option": "Compras"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Solicitação",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Novo colaborador (preparar acesso e computador)"
+                  },
+                  {
+                    "option": "Não consigo acessar um sistema"
+                  },
+                  {
+                    "option": "Computador ou notebook com problema"
+                  },
+                  {
+                    "option": "Internet, Wi-Fi não funciona"
+                  },
+                  {
+                    "option": "Problema com e-mail corporativo"
+                  },
+                  {
+                    "option": "Impressora não funciona / erro ao imprimir"
+                  },
+                  {
+                    "option": "Teclado, mouse, monitor ou celular corporativo"
+                  },
+                  {
+                    "option": "Outro Problema"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Digite resumidamente aqui o problema",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Anexe a foto caso achar necessário para nos ajudar",
+              "fieldType": "file"
+            }
+          ]
+        },
+        "options": {
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Entraremos em contato de acordo com a urgência do seu chamado, obrigado"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -16,
+        288
+      ],
+      "id": "4fc7c6ae-7d92-4871-a66f-5bae2b44a3db",
+      "name": "On form submission",
+      "webhookId": "780c5239-9067-4903-b65c-cbc3a3adb176"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1LRZ5nB9awWCfSh8Nt1uZbPQH2SZogZMpy7ljZmWLUtU/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "0",
+          "mode": "id"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome Completo": "={{ $json['Nome Completo'] }}",
+            "E-mail": "={{ $json['E-mail'] }}",
+            "Telefone": "={{ $json.Telefone }}",
+            "Setor": "={{ $json.Setor }}",
+            "Solicitação": "={{ $json['Solicitação'] }}",
+            "Descrição": "={{ $json['Digite resumidamente aqui o problema'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome Completo",
+              "displayName": "Nome Completo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Setor",
+              "displayName": "Setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Solicitação",
+              "displayName": "Solicitação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Descrição",
+              "displayName": "Descrição",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        304
+      ],
+      "id": "44660748-afc0-4df8-a545-6c8f5169c713",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DWZZIqqfyTTHRdHc",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2e93d540-ba97-41f8-9b83-b3b3053817b2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b21891d8362371d67383558de5f45c9b45fabe656479050a7440cbe8bc00fe01"
+  },
+  "id": "I-5WfX8-l0ZtMXGe1ZTj1",
+  "tags": []
+}
