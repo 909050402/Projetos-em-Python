@@ -1,0 +1,1037 @@
+{
+  "name": "final",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Parte da Medicina falar que liberou o ASO e comunicar ao RH isso."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "33d52bfa-cb1c-442d-9722-7a11ba1674d5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "formTitle": "Admissão novo colaborador",
+        "formDescription": "Tarefa do RH de preencher a parte dela referente ao processo de admissão do colaborador",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nome Colaborador",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "CPF",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "RG"
+            },
+            {
+              "fieldLabel": "Turno",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1º"
+                  },
+                  {
+                    "option": "2º"
+                  },
+                  {
+                    "option": "3º"
+                  },
+                  {
+                    "option": "Central"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Função"
+            },
+            {
+              "fieldLabel": "Número de contato",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Funcionário tem experiência na função?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Sim"
+                  },
+                  {
+                    "option": "Não"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Setor"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        -192
+      ],
+      "id": "f012690f-191e-4794-a90e-4a203d87d9ee",
+      "name": "RH",
+      "webhookId": "9384c1c5-f29b-41a6-ab3d-19ebc3637992"
+    },
+    {
+      "parameters": {
+        "content": "Informações que o RH envia para a medicina para a medicina encaminhar o empregado para exame admissional"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -256
+      ],
+      "id": "f7995f45-84ee-470a-a802-557eb83e6dee",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "formTitle": "Liberação de ASO",
+        "formDescription": "Aqui a Medicina irá avisar ao RH que o ASO foi aprovado",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "CPF Funcionário",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "O Aso foi aprovado?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Sim"
+                  },
+                  {
+                    "option": "Não"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "437365eb-4728-4c69-82d5-9ce69271a80f",
+      "name": "Medicina",
+      "webhookId": "70371066-8575-4428-9251-06dbb8e59359"
+    },
+    {
+      "parameters": {
+        "formTitle": "Dia do Treinamento",
+        "formDescription": "Parte do RH preencher qual será o dia do treinamento, para que todos os setores se organizem",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "CPF"
+            },
+            {
+              "fieldLabel": "Data Treinamento",
+              "fieldType": "date"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        176
+      ],
+      "id": "7a779e90-84ce-4796-9a79-85d2566a46b4",
+      "name": "Treinamento",
+      "webhookId": "09d0f2eb-d8c1-48fd-a8a7-dc466c1328fc"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "eYeBVysnO1auS7Iq",
+          "mode": "list",
+          "cachedResultName": "Admissão",
+          "cachedResultUrl": "/projects/WDIpa9cRN16S5Cwm/datatables/eYeBVysnO1auS7Iq"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $json['Nome Colaborador'] }}",
+            "CPF": "={{ $json.CPF }}",
+            "RG": "={{ $json.RG }}",
+            "Turno": "={{ $json.Turno }}",
+            "Funcao": "={{ $json['Função'] }}",
+            "Contato": "={{ $json['Número de contato'] }}",
+            "Experiencia": "={{ $json['Funcionário tem experiência na função?'] }}",
+            "Setor": "={{ $json.Setor }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "RG",
+              "displayName": "RG",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Turno",
+              "displayName": "Turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Setor",
+              "displayName": "Setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Funcao",
+              "displayName": "Funcao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Experiencia",
+              "displayName": "Experiencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aso_Aprovado",
+              "displayName": "Aso_Aprovado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dia_Treinamento",
+              "displayName": "Dia_Treinamento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Id_Email",
+              "displayName": "Id_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Thread_Email",
+              "displayName": "Thread_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        -192
+      ],
+      "id": "9d620743-c3e7-494f-b731-0bb19242f70e",
+      "name": "dados para exame admissional"
+    },
+    {
+      "parameters": {
+        "sendTo": "pipocayou098@gmail.com",
+        "subject": "=Admissao Colaborador  {{ $json.Nome }}",
+        "message": "=Favor encaminhar o colaborador para exames médicos, favor preencher o formulário assim que o ASO sair para que possamos dar continuidade. Informações para agendamento abaixo:\nNome:{{ $json.Nome }}\nCPF: {{ $json.CPF }}\nRG: {{ $json.RG }}\nFunção: {{ $json.Funcao }}\nSetor: {{ $json.Setor }}\n\nAtenciosamente,Mateus\nAssistente de RH\n📧 mateuanvilaca@gmail.com\n📞 (31) 999172282\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -192
+      ],
+      "id": "d781c678-9e2e-43a6-83ab-7c13aae112d2",
+      "name": "Rh manda e-mail pra medicina com os dados para exame admissional",
+      "webhookId": "80819770-dd98-4bab-b008-4e2614f8f3a1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eYeBVysnO1auS7Iq",
+          "mode": "list",
+          "cachedResultName": "Admissão",
+          "cachedResultUrl": "/projects/WDIpa9cRN16S5Cwm/datatables/eYeBVysnO1auS7Iq"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "CPF",
+              "keyValue": "={{ $('RH').item.json.CPF }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Id_Email": "={{ $json.id }}",
+            "Thread_Email": "=={{ $json.threadId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "RG",
+              "displayName": "RG",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Turno",
+              "displayName": "Turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Setor",
+              "displayName": "Setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Funcao",
+              "displayName": "Funcao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Experiencia",
+              "displayName": "Experiencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aso_Aprovado",
+              "displayName": "Aso_Aprovado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dia_Treinamento",
+              "displayName": "Dia_Treinamento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Id_Email",
+              "displayName": "Id_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Thread_Email",
+              "displayName": "Thread_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        -192
+      ],
+      "id": "8fbf1ffd-a773-462c-8425-1b00e48b4441",
+      "name": "pega o id e threads do e-mail"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eYeBVysnO1auS7Iq",
+          "mode": "list",
+          "cachedResultName": "Admissão",
+          "cachedResultUrl": "/projects/WDIpa9cRN16S5Cwm/datatables/eYeBVysnO1auS7Iq"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "CPF",
+              "keyValue": "={{ $json['CPF Funcionário'] }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CPF": "={{ $json['CPF Funcionário'] }}",
+            "Aso_Aprovado": "={{ $json['O Aso foi aprovado?'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "RG",
+              "displayName": "RG",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Turno",
+              "displayName": "Turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Setor",
+              "displayName": "Setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Funcao",
+              "displayName": "Funcao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Experiencia",
+              "displayName": "Experiencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aso_Aprovado",
+              "displayName": "Aso_Aprovado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dia_Treinamento",
+              "displayName": "Dia_Treinamento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Id_Email",
+              "displayName": "Id_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Thread_Email",
+              "displayName": "Thread_Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "35752c3a-c739-400b-9f51-d83594c7ec93",
+      "name": "atualiza se o ASO foi liberado"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.Id_Email }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        16
+      ],
+      "id": "da84937a-f013-4d1c-9c66-07a94b36e7c7",
+      "name": "puxa o e-mail anterior pra ter o histórico do e-mail",
+      "webhookId": "6701d001-f266-450d-9a7f-4b66b6253f81",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $json.threadId }}",
+        "messageId": "={{ $json.id }}",
+        "message": "=Bom Dia, o Aso do colaborador {{ $('atualiza se o ASO foi liberado').item.json.Nome }}  CPF {{ $('atualiza se o ASO foi liberado').item.json.CPF }} foi liberado, favor nos enviar o e-mail informando a data do treinamento introdutório\n\nAtenciosamente,Inêz\nTécnica de Enfermagem do Trabalho\n📧 pipocayou098@gmail.com\n📞 (31) 996650105\n\n-------------------------------------------------------------\n\nFavor encaminhar o colaborador para exames médicos, favor preencher o formulário assim que o ASO sair para que possamos dar continuidade. Informações para agendamento abaixo: Nome:{{ $('atualiza se o ASO foi liberado').item.json.Nome }} CPF: {{ $('atualiza se o ASO foi liberado').item.json.CPF }} RG: {{ $('atualiza se o ASO foi liberado').item.json.RG }} 5050 Função:{{ $('atualiza se o ASO foi liberado').item.json.Funcao }}  Setor: {{ $('atualiza se o ASO foi liberado').item.json.Setor }}\n\nAtenciosamente,Mateus\nAssistente de RH\n📧 mateuanvilaca@gmail.com\n📞 (31) 999172282",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        16
+      ],
+      "id": "d59c0851-e96b-43da-9d31-85a899d5b9f4",
+      "name": "Medicina responde o e-mail falando que o ASO foi liberado e solicita ao RH a data do treinamento",
+      "webhookId": "df4dc6c9-d5cd-4796-8d23-7e9a6b594649",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "eYeBVysnO1auS7Iq",
+          "mode": "list",
+          "cachedResultName": "Admissão",
+          "cachedResultUrl": "/projects/WDIpa9cRN16S5Cwm/datatables/eYeBVysnO1auS7Iq"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "CPF",
+              "keyValue": "={{ $json.CPF }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CPF": "={{ $json.CPF }}",
+            "Dia_Treinamento": "={{ $json['Data Treinamento'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CPF",
+              "displayName": "CPF",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "RG",
+              "displayName": "RG",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Turno",
+              "displayName": "Turno",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Setor",
+              "displayName": "Setor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Funcao",
+              "displayName": "Funcao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contato",
+              "displayName": "Contato",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Experiencia",
+              "displayName": "Experiencia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aso_Aprovado",
+              "displayName": "Aso_Aprovado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dia_Treinamento",
+              "displayName": "Dia_Treinamento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        176
+      ],
+      "id": "371147c0-a53c-4e22-a6ec-ed58ffd11d85",
+      "name": "Atualiza o banco de dados com a data do treinamento"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.Id_Email }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        176
+      ],
+      "id": "f3f2ef8e-3185-409e-b80f-c10c2da2243c",
+      "name": "Get a message",
+      "webhookId": "515ee31f-cd33-4199-a95f-62f728e6ccf0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $json.threadId }}",
+        "messageId": "={{ $json.id }}",
+        "message": "=Bom Dia a Todos,\no dia de treinamento do colaborador {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Nome }} será dia: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Dia_Treinamento }}\nno histórico de e-mail abaixo estão informações importantes para os setores darem continuidade no processo de admissão, SESMT favor verificar no histórico de e-mails abaixo caso ocolaborador não possui experiência na função, para assim dar mais instruções e acompanhar melhor nessa nova função.\n\nAtenciosamente,Mateus\nAssistente de RH\n📧 mateuanvilaca@gmail.com\n📞 (31) 999172282\n\n-------------------------------------------------------------\nBom Dia, o Aso do colaborador {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Nome }} CPF {{ $('Atualiza o banco de dados com a data do treinamento').item.json.CPF }}  foi liberado, favor nos enviar o e-mail informando a data do treinamento introdutório\n\nAtenciosamente,Inêz\nTécnica de Enfermagem do Trabalho\n📧 pipocayou098@gmail.com\n📞 (31) 996650105\n-------------------------------------------------------------\nFavor encaminhar o colaborador para exames médicos, favor preencher o formulário assim que o ASO sair para que possamos dar continuidade. Informações para agendamento abaixo: \nNome: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Nome }}\nCPF: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.CPF }}\nRG: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.RG }}\nFunção: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Funcao }}\nContato: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Contato }}\nSetor: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Setor }}\nExperiência: {{ $('Atualiza o banco de dados com a data do treinamento').item.json.Experiencia }}\n\nAtenciosamente,Mateus\nAssistente de RH\n📧 mateuanvilaca@gmail.com\n📞 (31) 999172282",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        192
+      ],
+      "id": "fb85d77e-671b-4f43-a7e6-46485dac9265",
+      "name": "Reply to a message",
+      "webhookId": "4c80ba24-720b-4936-99f1-4eb9e545fb40",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Parte do RH responder o e-mail informando a data do treinamento"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        176
+      ],
+      "id": "6a98a9f9-6173-48bd-9ef8-176960bc59aa",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RH": {
+      "main": [
+        [
+          {
+            "node": "dados para exame admissional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Medicina": {
+      "main": [
+        [
+          {
+            "node": "atualiza se o ASO foi liberado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Treinamento": {
+      "main": [
+        [
+          {
+            "node": "Atualiza o banco de dados com a data do treinamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados para exame admissional": {
+      "main": [
+        [
+          {
+            "node": "Rh manda e-mail pra medicina com os dados para exame admissional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rh manda e-mail pra medicina com os dados para exame admissional": {
+      "main": [
+        [
+          {
+            "node": "pega o id e threads do e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atualiza se o ASO foi liberado": {
+      "main": [
+        [
+          {
+            "node": "puxa o e-mail anterior pra ter o histórico do e-mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "puxa o e-mail anterior pra ter o histórico do e-mail": {
+      "main": [
+        [
+          {
+            "node": "Medicina responde o e-mail falando que o ASO foi liberado e solicita ao RH a data do treinamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualiza o banco de dados com a data do treinamento": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "aea75754-eb6d-44a9-b948-4e398cd27386",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b21891d8362371d67383558de5f45c9b45fabe656479050a7440cbe8bc00fe01"
+  },
+  "id": "VKnwjX3xGhWEvUMottxt0",
+  "tags": []
+}
