@@ -1,0 +1,266 @@
+{
+  "name": "Advogados",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1njDeGHt6sax25p_QpRjNqeH-bW33wTVw6xlxHP9vvqU/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "0",
+          "mode": "id"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Responsável",
+              "lookupValue": "Dr. Rafael Almeida"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "86184af6-10d1-4ac0-825c-e353c3693326",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "DWZZIqqfyTTHRdHc",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8d8cae09-5bb6-4462-b9cc-a6383233c0a9",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "Concluído",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        464,
+        16
+      ],
+      "id": "ad5754a2-cf2f-4e29-8e57-d80096f2674f",
+      "name": "Filtrando pelo responsável do Processo"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        912,
+        0
+      ],
+      "id": "24a3ccca-460f-40b7-b1a3-67873bcedf79",
+      "name": "apegar apenas os 3"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "Dias para Vencimento"
+            }
+          ]
+        },
+        "options": {
+          "disableDotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        704,
+        16
+      ],
+      "id": "5e225e5e-6ba4-4cae-a2ca-a01d55e6283d",
+      "name": " Vencimentos mais próximos"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Cliente"
+            },
+            {
+              "fieldToAggregate": "Dias para Vencimento"
+            },
+            {
+              "fieldToAggregate": "Processo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        16
+      ],
+      "id": "9c0d8e78-24cf-4c94-8173-3e6e7e8957a0",
+      "name": "Juntar todos os dados"
+    },
+    {
+      "parameters": {
+        "sendTo": "mateusnvilaca@gmail.com",
+        "subject": "Teste",
+        "message": "=<table style=\"\n  border-collapse: collapse;\n  width: 100%;\n  font-family: Arial, sans-serif;\n  font-size: 14px;\n\">\n\n  <tr style=\"background-color: #f2f2f2;\">\n    <th style=\"border: 1px solid #ccc; padding: 8px; text-align: left;\">\n      Cliente\n    </th>\n    <th style=\"border: 1px solid #ccc; padding: 8px; text-align: left;\">\n      Dias Úteis de Prazo\n    </th>\n    <th style=\"border: 1px solid #ccc; padding: 8px; text-align: left;\">\n      Nº Processo\n    </th>\n  </tr>\n\n  <tr>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Cliente[0] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json['Dias para Vencimento'][0] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Processo[0] }}\n    </td>\n  </tr>\n\n  <tr>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Cliente[1] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json['Dias para Vencimento'][1] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Processo[1] }}\n    </td>\n  </tr>\n\n  <tr>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Cliente[2] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json['Dias para Vencimento'][2] }}\n    </td>\n    <td style=\"border: 1px solid #ccc; padding: 8px;\">\n      {{ $json.Processo[2] }}\n    </td>\n  </tr>\n\n</table>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1280,
+        16
+      ],
+      "id": "334e5371-6cca-4f2d-a360-18da0558484c",
+      "name": "Enviar para o responsável pelo processo",
+      "webhookId": "a00e3227-cbd9-47d7-9102-806fba8aa752",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "xnP9Sta1WLoaTVTw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8,
+              "triggerAtMinute": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5653f8ff-d82d-443f-96b7-63c77c2e35ca",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filtrando pelo responsável do Processo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrando pelo responsável do Processo": {
+      "main": [
+        [
+          {
+            "node": " Vencimentos mais próximos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "apegar apenas os 3": {
+      "main": [
+        [
+          {
+            "node": "Juntar todos os dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Vencimentos mais próximos": {
+      "main": [
+        [
+          {
+            "node": "apegar apenas os 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Juntar todos os dados": {
+      "main": [
+        [
+          {
+            "node": "Enviar para o responsável pelo processo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar para o responsável pelo processo": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ffd9127f-882c-4ac7-a67e-a865c2642a5c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b21891d8362371d67383558de5f45c9b45fabe656479050a7440cbe8bc00fe01"
+  },
+  "id": "abXZuSu25_iBEHyfgFzJ8",
+  "tags": []
+}
